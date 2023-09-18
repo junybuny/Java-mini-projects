@@ -41,4 +41,36 @@ public class BookService {
 		return result;
 	}
 
+	public int deleteBook(String code) {
+		
+		Connection conn = JDBCTemplate.getConnection();
+		int result = new BookDao().deleteBook(conn, code);
+	
+		if (result > 0) {
+			JDBCTemplate.commit(conn);
+		} else {
+			JDBCTemplate.rollback(conn);
+		}
+		
+		JDBCTemplate.close(conn);
+		
+		return result;
+	}
+
+	public int deleteMember(String mem_id) {
+		
+		Connection conn = JDBCTemplate.getConnection();
+		int result = new BookDao().deleteMember(conn, mem_id);
+		
+		if (result > 0) {
+			JDBCTemplate.commit(conn);
+		} else {
+			JDBCTemplate.rollback(conn);
+		}
+		
+		JDBCTemplate.close(conn);
+		
+		return result;
+	}
+
 }

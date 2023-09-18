@@ -10,5 +10,13 @@
 		INSERT INTO MEMBER
 		VALUES(?, ?, ?, ?, ?)
 	</entry>
+	<entry key="deleteBook">
+		DELETE FROM BOOK
+		WHERE BOOK_CODE = ?
+	</entry>
+	<entry key="deleteMember">
+		DELETE FROM MEMBER
+		WHERE MEM_ID = ?
+	</entry>
 	
 </properties>

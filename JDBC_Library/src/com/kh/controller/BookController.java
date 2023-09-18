@@ -5,6 +5,7 @@ import com.kh.model.vo.Book;
 import com.kh.model.vo.Member;
 import com.kh.view.BookMenu;
 
+
 public class BookController {
 
 	public void insertBook(String code, String title, String author, String publisher, String genre) {
@@ -35,4 +36,28 @@ public class BookController {
 		
 	}
 
-}
+	public void deleteBook(String code) {
+		
+		int result = new BookService().deleteBook(code);
+		
+		if (result > 0) {
+			new BookMenu().displaySuccess(code + "도서 삭제에 완료하였습니다.");
+		} else {
+			new BookMenu().displayFail(code + "도서 삭제에 실패하였습니다.");
+		}
+	}
+
+	public void deleteMember(String mem_id) {
+		
+		int result = new BookService().deleteMember(mem_id);
+		
+		if (result > 0) {
+			new BookMenu().displaySuccess(mem_id + "회원을 삭제 완료하였습니다.");
+		} else {
+			new BookMenu().displayFail(mem_id + "회원 삭제에 실패하였습니다.");
+		}
+	}
+		
+	
+	
+} // class BookController
