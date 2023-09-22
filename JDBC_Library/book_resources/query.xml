@@ -28,6 +28,11 @@
 		SET RENT_TF = 'N'
 		WHERE BOOK_CODE = ?
 	</entry>
+	<entry key="return_bookList">
+		UPDATE BOOK 
+		SET RENT_TF = 'Y'
+		WHERE BOOK_CODE = ?
+	</entry>
 
 
 	

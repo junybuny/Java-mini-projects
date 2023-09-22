@@ -83,9 +83,24 @@ public class BookService {
 		return bookList;
 	}
 
-	public int bookList(Book b) {
+	public int rent_bookList(Book b) {
 		Connection conn = JDBCTemplate.getConnection();
-		int result = new BookDao().bookList(conn, b);
+		int result = new BookDao().rent_bookList(conn, b);
+		
+		if (result > 0) {
+			JDBCTemplate.commit(conn);
+		} else {
+			JDBCTemplate.rollback(conn);
+		}
+		
+		JDBCTemplate.close(conn);
+		
+		return result;
+	}
+	
+	public int return_bookList(Book b) {
+		Connection conn = JDBCTemplate.getConnection();
+		int result = new BookDao().return_bookList(conn, b);
 		
 		if (result > 0) {
 			JDBCTemplate.commit(conn);

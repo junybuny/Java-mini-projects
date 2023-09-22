@@ -71,18 +71,34 @@ public class BookController {
 		}
 	}
 
-	public void bookList(String rent_TF) {
+	public void rent_bookList(String rent_TF) {
 		
 		Book b = new Book();
 		
 		b.setRent_TF(rent_TF);
 		
-		int result = new BookService().bookList(b);
+		int result = new BookService().rent_bookList(b);
 		
 		if (result > 0) {
 			new BookMenu().displaySuccess("도서 대여를 완료하였습니다.");
 		} else {
 			new BookMenu().displayFail("도서 대여에 실패하였습니다.");
+		}
+		
+	}
+
+	public void return_bookList(String rent_TF) {
+		
+		Book b = new Book();
+		
+		b.setRent_TF(rent_TF);
+		
+		int result = new BookService().return_bookList(b);
+		
+		if (result > 0) {
+			new BookMenu().displaySuccess("도서 반납을 완료하였습니다.");
+		} else {
+			new BookMenu().displayFail("도서 반납에 실패하였습니다.");
 		}
 		
 	}

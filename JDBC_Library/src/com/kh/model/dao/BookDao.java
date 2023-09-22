@@ -156,13 +156,35 @@ public class BookDao {
 		return bookList;
 	}
 
-	public int bookList(Connection conn, Book b) {
+	public int rent_bookList(Connection conn, Book b) {
 		
 		int result = 0;
 		
 		PreparedStatement pstmt = null;
 		
 		String sql = prop.getProperty("rent_bookList");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, b.getRent_TF());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public int return_bookList(Connection conn, Book b) {
+		int result = 0;
+		
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("return_bookList");
 		
 		try {
 			pstmt = conn.prepareStatement(sql);

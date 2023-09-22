@@ -31,16 +31,16 @@ public class BookMenu {
 			
 			switch(menu) {
 			case 1: 
-				
 				bc.bookList();
 				break;
 			case 2:
 				inputBook();
 				break;
 			case 3:
-				bc.bookList(rentBook());
+				bc.rent_bookList(rentBook());
 				break;
 			case 4: 
+				bc.return_bookList(returnBook());
 				break;
 			case 5:
 				bc.deleteBook(inputbookCode());
@@ -61,6 +61,11 @@ public class BookMenu {
 	}
 	
 
+	public String returnBook() {
+		System.out.print("\n반납할 도서 코드 입력 : ");
+		return sc.nextLine();
+	}
+
 	public String rentBook() {
 		System.out.print("\n대여할 도서 코드 입력 : ");
 		return sc.nextLine();
@@ -78,7 +83,7 @@ public class BookMenu {
 
 	public void inputBook() {
 		// 도서 등록
-		System.out.print("\n=== 도서 등록 ===");
+		System.out.print("\n========== 도서 등록 ==========");
 
 		System.out.print("\n도서코드 : ");
 		String code = sc.nextLine();
@@ -101,7 +106,7 @@ public class BookMenu {
 	
 	public void inputMember() {
 		// 회원 등록
-		System.out.print("\n=== 회원 등록 ===");
+		System.out.print("\n========== 회원 등록 ==========");
 
 		System.out.print("\n회원 아이디 : ");
 		String mem_id = sc.nextLine();
@@ -137,7 +142,7 @@ public class BookMenu {
 
 	public void displayBookList(ArrayList<Book> list) {
 		System.out.println("========== 도서 목록 ==========");
-		System.out.println("도서 코드 \t도서명 \t저자 \t출판사 \t대여가능여부");
+		System.out.println("도서 코드 \t\t도서명 \t\t저자 \t\t출판사 \t\t대여가능여부");
 		
 		for (Book b : list) {
 			System.out.println(b);
