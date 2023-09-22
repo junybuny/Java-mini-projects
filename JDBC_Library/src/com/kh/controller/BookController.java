@@ -1,16 +1,19 @@
 package com.kh.controller;
 
+import java.util.ArrayList;
+
 import com.kh.model.service.BookService;
 import com.kh.model.vo.Book;
 import com.kh.model.vo.Member;
 import com.kh.view.BookMenu;
 
 
+
 public class BookController {
 
-	public void insertBook(String code, String title, String author, String publisher, String genre) {
+	public void insertBook(String code, String title, String author, String publisher, String rent_TF ) {
 		
-		Book b = new Book(code, title, author, publisher, genre);
+		Book b = new Book(code, title, author, publisher, rent_TF);
 		
 		int result = new BookService().insertBook(b);
 		
@@ -57,6 +60,44 @@ public class BookController {
 			new BookMenu().displayFail(mem_id + "회원 삭제에 실패하였습니다.");
 		}
 	}
+	
+	public void bookList() {
+		ArrayList<Book> bookList = new BookService().bookList();
+		
+		if (bookList.isEmpty()) {
+			new BookMenu().displayNoData("대여할수 있는 도서가 없습니다.");
+		} else {
+			new BookMenu().displayBookList(bookList);
+		}
+	}
+
+	public void bookList(String rent_TF) {
+		
+		Book b = new Book();
+		
+		b.setRent_TF(rent_TF);
+		
+		int result = new BookService().bookList(b);
+		
+		if (result > 0) {
+			new BookMenu().displaySuccess("도서 대여를 완료하였습니다.");
+		} else {
+			new BookMenu().displayFail("도서 대여에 실패하였습니다.");
+		}
+		
+	}
+
+	
+//	public void selectList() {
+//		ArrayList<Member> list = new MemberService().selectList();
+//		
+//		if (list.isEmpty()) {
+//			new MemberMenu().displayNoData("전체 조회 결과가 없습니다.");
+//		} else {
+//			new MemberMenu().displayMemberList(list);
+//		}
+//		
+//	}
 		
 	
 	

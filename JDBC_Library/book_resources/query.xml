@@ -3,7 +3,7 @@
 <properties>
 
 	<entry key="insertBook">
-		INSERT INTO LIBRARY
+		INSERT INTO BOOK
 		VALUES(?, ?, ?, ?, ?)
 	</entry>
 	<entry key="insertMember">
@@ -18,5 +18,17 @@
 		DELETE FROM MEMBER
 		WHERE MEM_ID = ?
 	</entry>
+	<entry key="bookList">
+		SELECT *
+		FROM BOOK
+		ORDER BY BOOK_CODE
+	</entry>
+	<entry key="rent_bookList">
+		UPDATE BOOK 
+		SET RENT_TF = 'N'
+		WHERE BOOK_CODE = ?
+	</entry>
+
+
 	
 </properties>

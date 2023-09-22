@@ -1,6 +1,7 @@
 package com.kh.model.service;
 
 import java.sql.Connection;
+import java.util.ArrayList;
 
 import com.kh.common.JDBCTemplate;
 import com.kh.model.dao.BookDao;
@@ -61,6 +62,30 @@ public class BookService {
 		
 		Connection conn = JDBCTemplate.getConnection();
 		int result = new BookDao().deleteMember(conn, mem_id);
+		
+		if (result > 0) {
+			JDBCTemplate.commit(conn);
+		} else {
+			JDBCTemplate.rollback(conn);
+		}
+		
+		JDBCTemplate.close(conn);
+		
+		return result;
+	}
+
+	public ArrayList<Book> bookList() {
+		
+		Connection conn = JDBCTemplate.getConnection();
+		ArrayList<Book> bookList = new BookDao().bookList(conn);
+		JDBCTemplate.close(conn);
+		
+		return bookList;
+	}
+
+	public int bookList(Book b) {
+		Connection conn = JDBCTemplate.getConnection();
+		int result = new BookDao().bookList(conn, b);
 		
 		if (result > 0) {
 			JDBCTemplate.commit(conn);

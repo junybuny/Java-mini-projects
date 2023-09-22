@@ -5,15 +5,19 @@ public class Book {
 	private String title;
 	private String author;
 	private String publisher;
-	private String genre;
+	private String rent_TF;
 	
-	public Book(String code, String title, String author, String publisher, String genre) {
-		super();
+	public Book(String code, String title, String author, String publisher, String rent_TF) {
+		// super();
 		this.code = code;
 		this.title = title;
 		this.author = author;
 		this.publisher = publisher;
-		this.genre = genre;
+		this.rent_TF = rent_TF;
+	}
+	
+	public Book() {
+		super();
 	}
 
 	public String getCode() {
@@ -48,18 +52,17 @@ public class Book {
 		this.publisher = publisher;
 	}
 
-	public String getGenre() {
-		return genre;
+	public String getRent_TF() {
+		return rent_TF;
 	}
 
-	public void setGenre(String genre) {
-		this.genre = genre;
+	public void setRent_TF(String rent_TF) {
+		this.rent_TF = rent_TF;
 	}
 
 	@Override
 	public String toString() {
-		return "Book [code=" + code + ", title=" + title + ", author=" + author + ", publisher=" + publisher
-				+ ", genre=" + genre + "]";
+		return code + "\t" + title + "\t" + author + "\t" + publisher + "\t" + rent_TF;
 	}
 	
 	

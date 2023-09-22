@@ -1,7 +1,9 @@
 package com.kh.view;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 import com.kh.controller.BookController;
+import com.kh.model.vo.Book;
 
 public class BookMenu {
 	
@@ -29,16 +31,14 @@ public class BookMenu {
 			
 			switch(menu) {
 			case 1: 
-				// 회원 아이디 입력 후
-				// 회원 아이디 RENT_BOOK 테이블 가져오기
-				// OR
-				// 누가 빌렸는지 알려주는 조회
+				
+				bc.bookList();
 				break;
 			case 2:
 				inputBook();
 				break;
 			case 3:
-				// 여기서도 대여 가능 불가능 도서를 보여줘야함
+				bc.bookList(rentBook());
 				break;
 			case 4: 
 				break;
@@ -58,6 +58,12 @@ public class BookMenu {
 				System.out.println("메뉴를 잘못 입력하셨습니다. 다시 입력해주세요.");
 			}		
 		}
+	}
+	
+
+	public String rentBook() {
+		System.out.print("\n대여할 도서 코드 입력 : ");
+		return sc.nextLine();
 	}
 
 	public String inputmem_id() {
@@ -86,10 +92,10 @@ public class BookMenu {
 		System.out.print("출판사 : ");
 		String publisher = sc.nextLine().toUpperCase();	
 		
-		System.out.print("장르 : ");
-		String genre = sc.nextLine();
+		System.out.print("대여가능여부(Y/N) : ");
+		String rent_TF = sc.nextLine().toUpperCase();
 		
-		bc.insertBook(code, title, author, publisher, genre);
+		bc.insertBook(code, title, author, publisher, rent_TF);
 	
 	}
 	
@@ -128,14 +134,16 @@ public class BookMenu {
 	public void displayNoData(String message) {
 		System.out.println("\n" + message);
 	}
+
+	public void displayBookList(ArrayList<Book> list) {
+		System.out.println("========== 도서 목록 ==========");
+		System.out.println("도서 코드 \t도서명 \t저자 \t출판사 \t대여가능여부");
+		
+		for (Book b : list) {
+			System.out.println(b);
+		}
+	}
 	
-//	public void displayMemberList(ArrayList<Book> list) {
-//		System.out.println("\n조회된 데이터는 다음과 같습니다");
-//			
-//		for (Book b : list) {
-//			System.out.println(b);
-//		}
-//	}
 //
 //	public void displayMember(Book b) {
 //		System.out.println("\n조회된 데이터는 다음과 같습니다.");
