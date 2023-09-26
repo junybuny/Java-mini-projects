@@ -70,6 +70,16 @@ public class BookController {
 			new BookMenu().displayBookList(bookList);
 		}
 	}
+	
+	public void rentY_bookList() {
+		ArrayList<Book> rentY_bookList = new BookService().rentY_bookList();
+		
+		if (rentY_bookList.isEmpty()) {
+			new BookMenu().displayNoData("대여중인 도서가 없습니다.");
+		} else {
+			new BookMenu().displayRentBookList(rentY_bookList);
+		}
+	}
 
 	public void rent_bookList(String rent_TF) {
 		

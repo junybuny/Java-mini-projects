@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
-
+	
 	<entry key="insertBook">
 		INSERT INTO BOOK
 		VALUES(?, ?, ?, ?, ?)
@@ -23,6 +23,14 @@
 		FROM BOOK
 		ORDER BY BOOK_CODE
 	</entry>
+	<entry key="rentY_bookList">
+		SELECT RENT_ID, RENT_TITLE, RENT_MEMBER, RENT_DATE
+		FROM RENTBOOK
+		JOIN BOOK ON (BOOK_CODE = RENT_ID)
+		JOIN BOOK ON (BOOK_TITLE = RENT_TITLE)
+		JOIN MEMBER ON (MEM_ID = RENT_MEMBER)
+		WHERE RENT_TF = 'Y';
+	</entry>
 	<entry key="rent_bookList">
 		UPDATE BOOK 
 		SET RENT_TF = 'N'
@@ -33,6 +41,7 @@
 		SET RENT_TF = 'Y'
 		WHERE BOOK_CODE = ?
 	</entry>
+	
 
 
 	

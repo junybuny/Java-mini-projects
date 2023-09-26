@@ -31,7 +31,7 @@ public class BookMenu {
 			
 			switch(menu) {
 			case 1: 
-				bc.bookList();
+				bc.rentY_bookList();
 				break;
 			case 2:
 				inputBook();
@@ -143,6 +143,15 @@ public class BookMenu {
 	public void displayBookList(ArrayList<Book> list) {
 		System.out.println("========== 도서 목록 ==========");
 		System.out.println("도서 코드 \t\t도서명 \t\t저자 \t\t출판사 \t\t대여가능여부");
+		
+		for (Book b : list) {
+			System.out.println(b);
+		}
+	}
+	
+	public void displayRentBookList(ArrayList<Book> list) {
+		System.out.println("========== 도서 목록 ==========");
+		System.out.println("대여 도서코드 \t\t대여 도서명 \t\t대여한 회원아이디 \t\t대여일자");
 		
 		for (Book b : list) {
 			System.out.println(b);

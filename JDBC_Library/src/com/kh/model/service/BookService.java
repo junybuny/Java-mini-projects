@@ -82,6 +82,15 @@ public class BookService {
 		
 		return bookList;
 	}
+	
+	public ArrayList<Book> rentY_bookList() {
+		
+		Connection conn = JDBCTemplate.getConnection();
+		ArrayList<Book> rentY_bookList = new BookDao().rentY_bookList(conn);
+		JDBCTemplate.close(conn);
+		
+		return rentY_bookList;
+	}
 
 	public int rent_bookList(Book b) {
 		Connection conn = JDBCTemplate.getConnection();

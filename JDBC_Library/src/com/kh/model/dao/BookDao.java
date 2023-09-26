@@ -155,6 +155,41 @@ public class BookDao {
 		
 		return bookList;
 	}
+	
+	public ArrayList<Book> rentY_bookList(Connection conn) {
+		
+		ArrayList<Book> rentY_bookList = new ArrayList<>();
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("rentY_bookList");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				// rentBook rb = new rentBook(); 
+				
+				// 여기서 부터 수정!
+//				b.setCode(rset.getString("book_code"));
+//				b.setTitle(rset.getString("book_title"));
+//				b.setAuthor(rset.getString("book_author"));
+//				b.setPublisher(rset.getString("book_publisher"));
+//				b.setRent_TF(rset.getString("rent_TF"));
+				
+//				rentY_bookList.add(b);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt); 
+		}
+		
+		return rentY_bookList;
+	}
 
 	public int rent_bookList(Connection conn, Book b) {
 		
@@ -200,6 +235,8 @@ public class BookDao {
 		
 		return result;
 	}
+
+	
 	
 	
 	
