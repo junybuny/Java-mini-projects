@@ -60,10 +60,11 @@ public class BookDao {
 			pstmt = conn.prepareStatement(sql);
 			
 			pstmt.setString(1, m.getMem_id());
-			pstmt.setString(2, m.getMem_name());
-			pstmt.setInt(3, m.getMem_age());
-			pstmt.setString(4, m.getMem_phone());
-			pstmt.setString(5, m.getMem_address());
+			pstmt.setString(2, m.getMem_pwd());
+			pstmt.setString(3, m.getMem_name());
+			pstmt.setInt(4, m.getMem_age());
+			pstmt.setString(5, m.getMem_phone());
+			pstmt.setString(6, m.getMem_address());
 			
 			result = pstmt.executeUpdate();
 			
@@ -224,6 +225,30 @@ public class BookDao {
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, b.getRent_TF());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public int loginMember(Connection conn, String mem_id, String mem_pwd) {
+		
+		int result = 0;
+		
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("loginMember");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, mem_id);
+			pstmt.setString(2, mem_pwd);
 			
 			result = pstmt.executeUpdate();
 			

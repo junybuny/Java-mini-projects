@@ -2,15 +2,17 @@ package com.kh.model.vo;
 
 public class Member {
 	private String mem_id;
+	private String mem_pwd;
 	private String mem_name;
 	private int mem_age;
 	private String mem_phone;
 	private String mem_address;
 	
 	// Alt + Shift + s + o
-	public Member(String mem_id, String mem_name, int mem_age, String mem_phone, String mem_address) {
+	public Member(String mem_id, String mem_pwd, String mem_name, int mem_age, String mem_phone, String mem_address) {
 		super();
 		this.mem_id = mem_id;
+		this.mem_pwd = mem_pwd;
 		this.mem_name = mem_name;
 		this.mem_age = mem_age;
 		this.mem_phone = mem_phone;
@@ -24,6 +26,14 @@ public class Member {
 
 	public void setMem_id(String mem_id) {
 		this.mem_id = mem_id;
+	}
+	
+	public String getMem_pwd() {
+		return mem_pwd;
+	}
+
+	public void setMem_pwd(String mem_pwd) {
+		this.mem_pwd = mem_pwd;
 	}
 
 	public String getMem_name() {

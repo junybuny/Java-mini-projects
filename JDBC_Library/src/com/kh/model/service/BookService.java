@@ -122,4 +122,20 @@ public class BookService {
 		return result;
 	}
 
+	public int loginMember(String mem_id, String mem_pwd) {
+		
+		Connection conn = JDBCTemplate.getConnection();
+		int result = new BookDao().loginMember(conn, mem_id, mem_pwd);
+		
+		if (result > 0) {
+			JDBCTemplate.commit(conn);
+		} else {
+			JDBCTemplate.rollback(conn);
+		}
+		
+		JDBCTemplate.close(conn);
+		
+		return result;
+	}
+
 }

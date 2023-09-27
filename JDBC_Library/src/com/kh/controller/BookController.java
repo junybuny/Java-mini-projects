@@ -25,9 +25,9 @@ public class BookController {
 		
 	}
 
-	public void insertMember(String mem_id, String mem_name, String mem_age, String mem_phone, String mem_address) {
+	public void insertMember(String mem_id, String mem_pwd, String mem_name, String mem_age, String mem_phone, String mem_address) {
 		
-		Member m = new Member(mem_id, mem_name, Integer.parseInt(mem_age), mem_phone, mem_address);
+		Member m = new Member(mem_id, mem_pwd, mem_name, Integer.parseInt(mem_age), mem_phone, mem_address);
 		
 		int result = new BookService().insertMember(m);
 		
@@ -111,6 +111,17 @@ public class BookController {
 			new BookMenu().displayFail("도서 반납에 실패하였습니다.");
 		}
 		
+	}
+
+	public void loginMember(String mem_id, String mem_pwd) {
+		
+		int result = new BookService().loginMember(mem_id, mem_pwd);
+		
+		if (result > 0) {
+			new BookMenu().displaySuccess(mem_id + "님 환영합니다.");
+		} else {
+			new BookMenu().displayFail("로그인에 실패하였습니다.");
+		}
 	}
 
 	
