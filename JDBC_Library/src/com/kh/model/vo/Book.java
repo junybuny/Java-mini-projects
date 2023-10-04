@@ -5,15 +5,17 @@ public class Book {
 	private String title;
 	private String author;
 	private String publisher;
-	private String rent_TF;
+	private boolean isRent = false;
+	private String mem_id;
+
 	
-	public Book(String code, String title, String author, String publisher, String rent_TF) {
+	public Book(String code, String title, String author, String publisher) {
 		// super();
 		this.code = code;
 		this.title = title;
 		this.author = author;
 		this.publisher = publisher;
-		this.rent_TF = rent_TF;
+
 	}
 	
 	public Book() {
@@ -51,18 +53,19 @@ public class Book {
 	public void setPublisher(String publisher) {
 		this.publisher = publisher;
 	}
-
-	public String getRent_TF() {
-		return rent_TF;
+	
+	public boolean getIsRent() {
+		return isRent;
 	}
 
-	public void setRent_TF(String rent_TF) {
-		this.rent_TF = rent_TF;
+	public void setIsRent(boolean isRent) {
+		this.isRent = isRent;
 	}
+
 
 	@Override
 	public String toString() {
-		return code + "\t" + title + "\t" + author + "\t" + publisher + "\t" + rent_TF;
+		return code + "\t" + title + "\t" + author + "\t" + publisher;
 	}
 	
 	

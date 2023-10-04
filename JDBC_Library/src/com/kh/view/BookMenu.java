@@ -11,104 +11,57 @@ public class BookMenu {
 	private BookController bc = new BookController();
 	
 	public void mainMenu() {
-		// 로그인 하지 않아도 보여주는거 -> 대여현황(대여가능/불가능 전체), 회원등록
-		// 로그인 후 -> 도서대여(내가 빌린책만 조회), 도서반납, 회원탈퇴?, 회원정보수정
-		// 관리자가 있다면 -> 도서등록, 도서삭제, 회원삭제
-		while(true) {
-			
+		
+				// 회원수정
+				// 도서대여(boolean) 수정
 				while(true) {
 				System.out.println("============================");
 				System.out.println("1. 로그인");
-				System.out.println("2. 회원등록");
+				System.out.println("2. 회원 등록");
+				System.out.println("3. 대여 현황");
+				System.out.println("4. 도서 대여");
+				System.out.println("5. 도서 반납");
+				System.out.println("6. 도서 등록");
+				System.out.println("7. 도서 삭제");
+				System.out.println("8. 회원 정보 수정");
+				System.out.println("9. 회원 탈퇴");
 				System.out.println("0. 종료");
 				System.out.println("============================");
 				System.out.print(">> 메뉴 선택 : ");
 				
-				int num1 = sc.nextInt();
+				int menu = sc.nextInt();
 				sc.nextLine();
 				
-				switch(num1) {
+				switch(menu) {
 				case 1: 
 					bc.loginMember(inputmem_id(), inputmem_pwd());
 					break;
 				case 2:
 					inputMember();
 					break;
-				case 0:
-					System.out.println("이용해주셔서 감사합니다. 프로그램을 종료합니다.");
-					return;
-				default:
-					System.out.println("메뉴를 잘못 입력하셨습니다. 다시 입력해주세요.");
+				case 3: 
+					bc.rentY_bookList(); // 수정필요, 로그인 한 회원의 도서목록 가져오기..
 					break;
-				}
-				break;
-			}
-			
-			
-			while(true) {
-				// 일반회원 목록
-				System.out.println("============================");
-				System.out.println("1. 대여 현황");
-				System.out.println("2. 도서 대여");
-				System.out.println("3. 도서 반납");
-				System.out.println("4. 회원 탈퇴"); // 대여중인 도서가 있으면 불가
-				System.out.println("0. 프로그램 종료");
-				System.out.println("============================");
-				
-				System.out.print(">> 메뉴 선택 : ");
-				int memberMenu = sc.nextInt();
-				sc.nextLine();
-				
-				switch(memberMenu) {
-					case 1:
-						bc.rentY_bookList();
-						break;
-					case 2: 
-						bc.rent_bookList(rentBook());
-						break;
-					case 3: 
-						bc.return_bookList(returnBook());
-						break;
-					case 4:
-						
-						break;
-					case 0:
-						System.out.println("이용해주셔서 감사합니다. 프로그램을 종료합니다.");
-						return;
-					default:
-						System.out.println("메뉴를 잘못 입력하셨습니다. 다시 입력해주세요."); // 일반회원 목록으로.. 가야하는디..
-						break;
-				}
-				// 일반회원 메뉴 루프 종료
-			    break;
-			}
-			
-			while(true) {
-				// 관리자 목록
-				System.out.println("============================");
-				System.out.println("1. 도서 목록"); // rent_TF = 'Y'인것만할지 고민중
-				System.out.println("2. 도서 등록");
-				System.out.println("3. 도서 삭제");
-				System.out.println("4. 회원 삭제");
-				System.out.println("0. 프로그램 종료");
-				System.out.println("============================");
-				
-				System.out.print(">> 메뉴 선택 : ");
-				int maseterMenu = sc.nextInt();
-				sc.nextLine();
-				
-				switch(maseterMenu) {
-				case 1: 
-					bc.rentY_bookList();
+				case 4:
+					bc.bookList();
+					bc.rent_bookList(rentBook()); // 로그인 하여야 가능한지..?
 					break;
-				case 2:
+				case 5:
+					bc.bookList();
+					bc.return_bookList(returnBook());
+					break;
+				case 6:
 					inputBook();
 					break;
-				case 3:
+				case 7: 
 					bc.deleteBook(inputbookCode());
 					break;
-				case 4: 
-					bc.deleteMember(inputmem_id());
+				case 8:
+					updateMember();
+					break;
+				case 9:
+					// 회원탈퇴 구현
+					bc.deleteMember(inputmem_id()); // <- 이건회원삭제, 대여중인 책 있으면 탈퇴 불가
 					break;
 				case 0:
 					System.out.println("이용해주셔서 감사합니다. 프로그램을 종료합니다.");
@@ -117,11 +70,9 @@ public class BookMenu {
 					System.out.println("메뉴를 잘못 입력하셨습니다. 다시 입력해주세요.");
 					break;
 				}
-				// 관리자 메뉴 루프 종료
-			    break;
 			}
 		}
-	}
+
 
 	public String returnBook() {
 		System.out.print("\n반납할 도서 코드 입력 : ");
@@ -147,6 +98,26 @@ public class BookMenu {
 		System.out.print("\n도서 코드 입력 : ");
 		return sc.nextLine();
 	}
+	
+	public void updateMember() {
+		System.out.print("\n======== 회원 정보 수정 ========");
+		
+		String mem_id = inputmem_id();
+		
+		System.out.print("변경할 비밀번호 : ");
+		String mem_pwd = sc.nextLine();
+		
+		System.out.print("변경할 이메일 : ");
+		String mem_email = sc.nextLine();
+		
+		System.out.print("변경할 전화번호 : ");
+		String mem_phone = sc.nextLine();
+		
+		System.out.print("변경할 주소 : ");
+		String mem_address = sc.nextLine();
+		
+		bc.updateMember(mem_id, mem_pwd, mem_email, mem_phone, mem_address);
+	}
 
 	public void inputBook() {
 		// 도서 등록
@@ -164,10 +135,7 @@ public class BookMenu {
 		System.out.print("출판사 : ");
 		String publisher = sc.nextLine().toUpperCase();	
 		
-		System.out.print("대여가능여부(Y/N) : ");
-		String rent_TF = sc.nextLine().toUpperCase();
-		
-		bc.insertBook(code, title, author, publisher, rent_TF);
+		bc.insertBook(code, title, author, publisher);
 	
 	}
 	
@@ -212,7 +180,7 @@ public class BookMenu {
 
 	public void displayBookList(ArrayList<Book> list) {
 		System.out.println("========== 도서 목록 ==========");
-		System.out.println("도서 코드 \t\t도서명 \t\t저자 \t\t출판사 \t\t대여가능여부");
+		System.out.println("도서 코드 \t도서명 \t\t저자 \t\t출판사 \t대여가능여부");
 		
 		for (Book b : list) {
 			System.out.println(b);
@@ -221,7 +189,7 @@ public class BookMenu {
 	
 	public void displayRentBookList(ArrayList<Book> list) {
 		System.out.println("========== 도서 목록 ==========");
-		System.out.println("대여 도서코드 \t\t대여 도서명 \t\t대여한 회원아이디 \t\t대여일자");
+		System.out.println("대여 도서코드 \t대여 도서명 \t대여한 회원아이디 \t대여일자");
 		
 		for (Book b : list) {
 			System.out.println(b);

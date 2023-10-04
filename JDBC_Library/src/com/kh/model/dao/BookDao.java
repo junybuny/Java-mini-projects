@@ -38,7 +38,6 @@ public class BookDao {
 			pstmt.setString(2, b.getTitle());
 			pstmt.setString(3, b.getAuthor());
 			pstmt.setString(4, b.getPublisher());
-			pstmt.setString(5, b.getRent_TF());
 			
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
@@ -62,7 +61,7 @@ public class BookDao {
 			pstmt.setString(1, m.getMem_id());
 			pstmt.setString(2, m.getMem_pwd());
 			pstmt.setString(3, m.getMem_name());
-			pstmt.setInt(4, m.getMem_age());
+			pstmt.setString(4, m.getMem_email());
 			pstmt.setString(5, m.getMem_phone());
 			pstmt.setString(6, m.getMem_address());
 			
@@ -143,7 +142,6 @@ public class BookDao {
 				b.setTitle(rset.getString("book_title"));
 				b.setAuthor(rset.getString("book_author"));
 				b.setPublisher(rset.getString("book_publisher"));
-				b.setRent_TF(rset.getString("rent_TF"));
 				
 				bookList.add(b);
 			}
@@ -202,7 +200,7 @@ public class BookDao {
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, b.getRent_TF());
+			//pstmt.setString(1, b.getRent_TF());
 			
 			result = pstmt.executeUpdate();
 			
@@ -224,7 +222,7 @@ public class BookDao {
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, b.getRent_TF());
+			//pstmt.setString(1, b.getRent_TF());
 			
 			result = pstmt.executeUpdate();
 			
@@ -249,6 +247,33 @@ public class BookDao {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, mem_id);
 			pstmt.setString(2, mem_pwd);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public int updateMember(Connection conn, Member m) {
+		
+		int result = 0;
+		
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("updateMember");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, m.getMem_pwd());
+			pstmt.setString(2, m.getMem_email());
+			pstmt.setString(3, m.getMem_phone());
+			pstmt.setString(4, m.getMem_address());
+			pstmt.setString(5, m.getMem_id());
 			
 			result = pstmt.executeUpdate();
 			

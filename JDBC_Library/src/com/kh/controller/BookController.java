@@ -11,9 +11,9 @@ import com.kh.view.BookMenu;
 
 public class BookController {
 
-	public void insertBook(String code, String title, String author, String publisher, String rent_TF ) {
+	public void insertBook(String code, String title, String author, String publisher) {
 		
-		Book b = new Book(code, title, author, publisher, rent_TF);
+		Book b = new Book(code, title, author, publisher);
 		
 		int result = new BookService().insertBook(b);
 		
@@ -25,9 +25,9 @@ public class BookController {
 		
 	}
 
-	public void insertMember(String mem_id, String mem_pwd, String mem_name, String mem_age, String mem_phone, String mem_address) {
+	public void insertMember(String mem_id, String mem_pwd, String mem_name, String mem_email, String mem_phone, String mem_address) {
 		
-		Member m = new Member(mem_id, mem_pwd, mem_name, Integer.parseInt(mem_age), mem_phone, mem_address);
+		Member m = new Member(mem_id, mem_pwd, mem_name, mem_email, mem_phone, mem_address);
 		
 		int result = new BookService().insertMember(m);
 		
@@ -67,6 +67,8 @@ public class BookController {
 		if (bookList.isEmpty()) {
 			new BookMenu().displayNoData("대여할수 있는 도서가 없습니다.");
 		} else {
+			
+			
 			new BookMenu().displayBookList(bookList);
 		}
 	}
@@ -81,11 +83,13 @@ public class BookController {
 		}
 	}
 
-	public void rent_bookList(String rent_TF) {
+	public void rent_bookList(String code) {
 		
 		Book b = new Book();
 		
-		b.setRent_TF(rent_TF);
+		boolean isRent = false;
+		
+		
 		
 		int result = new BookService().rent_bookList(b);
 		
@@ -97,11 +101,9 @@ public class BookController {
 		
 	}
 
-	public void return_bookList(String rent_TF) {
+	public void return_bookList(String code) {
 		
-		Book b = new Book();
-		
-		b.setRent_TF(rent_TF);
+		Book b = new Book();	
 		
 		int result = new BookService().return_bookList(b);
 		
@@ -122,6 +124,26 @@ public class BookController {
 		} else {
 			new BookMenu().displayFail("로그인에 실패하였습니다.");
 		}
+	}
+
+	public void updateMember(String mem_id, String mem_pwd, String mem_email, String mem_phone, String mem_address) {
+		
+		Member m = new Member();
+		
+		m.setMem_id(mem_id);
+		m.setMem_pwd(mem_pwd);
+		m.setMem_email(mem_email);
+		m.setMem_phone(mem_phone);
+		m.setMem_address(mem_address);
+		
+		int result = new BookService().updateMember(m);
+		
+		if (result > 0) {
+			new BookMenu().displaySuccess("성공적으로 정보 수정을 완료하였습니다.");
+		} else {
+			new BookMenu().displayFail("회원 정보 수정에 실패하였습니다.");
+		}
+		
 	}
 
 	
