@@ -7,10 +7,11 @@ import com.kh.common.JDBCTemplate;
 import com.kh.model.dao.BookDao;
 import com.kh.model.vo.Book;
 import com.kh.model.vo.Member;
+import com.kh.model.vo.RentBook;
 
 public class BookService {
 	
-	static Member loginMember;
+	static public Member loginMember;
 	
 	public int insertBook(Book b) {
 		
@@ -85,20 +86,19 @@ public class BookService {
 		return bookList;
 	}
 	
-	public ArrayList<Book> rentY_bookList() {
-		
+	public ArrayList<RentBook> rentY_bookList() {
 		Connection conn = JDBCTemplate.getConnection();
-		ArrayList<Book> rentY_bookList = new BookDao().rentY_bookList(conn);
+		ArrayList<RentBook> rentY_bookList = new BookDao().rentY_bookList(conn);
 		JDBCTemplate.close(conn);
 		
 		return rentY_bookList;
 	}
 
-	public int rent_bookList(Book b) {
+	public int rent_bookList(String code) {
 		Connection conn = JDBCTemplate.getConnection();
-		int result = new BookDao().rent_bookList(conn, b);
+		int result = new BookDao().rent_bookList(conn, code);
 		
-		if (result > 0) {
+		if (result >0) {
 			JDBCTemplate.commit(conn);
 		} else {
 			JDBCTemplate.rollback(conn);
@@ -109,9 +109,9 @@ public class BookService {
 		return result;
 	}
 	
-	public int return_bookList(Book b) {
+	public int return_bookList(String code) {
 		Connection conn = JDBCTemplate.getConnection();
-		int result = new BookDao().return_bookList(conn, b);
+		int result = new BookDao().return_bookList(conn, code);
 		
 		if (result > 0) {
 			JDBCTemplate.commit(conn);

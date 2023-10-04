@@ -10,8 +10,10 @@ import java.util.ArrayList;
 import java.util.Properties;
 
 import com.kh.common.JDBCTemplate;
+import com.kh.model.service.BookService;
 import com.kh.model.vo.Book;
 import com.kh.model.vo.Member;
+import com.kh.model.vo.RentBook;
 
 public class BookDao {
 	
@@ -38,7 +40,7 @@ public class BookDao {
 			pstmt.setString(2, b.getTitle());
 			pstmt.setString(3, b.getAuthor());
 			pstmt.setString(4, b.getPublisher());
-			
+			pstmt.setString(5, BookService.loginMember.getMem_id());			
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -155,54 +157,61 @@ public class BookDao {
 		return bookList;
 	}
 	
-	public ArrayList<Book> rentY_bookList(Connection conn) {
+	public ArrayList<RentBook> rentY_bookList(Connection conn) {
 		
-		ArrayList<Book> rentY_bookList = new ArrayList<>();
-		
-		PreparedStatement pstmt = null;
 		ResultSet rset = null;
+		ArrayList<RentBook> rentY_bookList = new ArrayList<>();
+		PreparedStatement pstmt = null;
 		
 		String sql = prop.getProperty("rentY_bookList");
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, BookService.loginMember.getMem_id());
 			rset = pstmt.executeQuery();
 			
+			
 			while(rset.next()) {
-				// rentBook rb = new rentBook(); 
-				
-				// 여기서 부터 수정!
-//				b.setCode(rset.getString("book_code"));
-//				b.setTitle(rset.getString("book_title"));
-//				b.setAuthor(rset.getString("book_author"));
-//				b.setPublisher(rset.getString("book_publisher"));
-//				b.setRent_TF(rset.getString("rent_TF"));
-				
-//				rentY_bookList.add(b);
+				RentBook rb = new RentBook(rset.getString("rent_id"),
+						rset.getString("book_title"),
+						rset.getString("rent_member"),
+						rset.getDate("rent_date")
+						); 
+				rentY_bookList.add(rb);
+			
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			JDBCTemplate.close(rset);
+			
 			JDBCTemplate.close(pstmt); 
 		}
 		
 		return rentY_bookList;
 	}
 
-	public int rent_bookList(Connection conn, Book b) {
+	public int rent_bookList(Connection conn, String code) {
 		
 		int result = 0;
 		
 		PreparedStatement pstmt = null;
 		
 		String sql = prop.getProperty("rent_bookList");
+		String sql2 = prop.getProperty("rent_bookList2");
 		
 		try {
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, b.getCode());
-			
+			pstmt = conn.prepareStatement(sql2);
+			pstmt.setString(1, code);
+			pstmt.setString(2, BookService.loginMember.getMem_id());
 			result = pstmt.executeUpdate();
+			
+			if(result > 0) {
+				result = 0;
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, code);
+				result = pstmt.executeUpdate();
+				return result;
+			}
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -213,18 +222,27 @@ public class BookDao {
 		return result;
 	}
 
-	public int return_bookList(Connection conn, Book b) {
+	public int return_bookList(Connection conn, String code) {
+		
 		int result = 0;
 		
 		PreparedStatement pstmt = null;
 		
 		String sql = prop.getProperty("return_bookList");
+		String sql2 = prop.getProperty("return_bookList2");
 		
 		try {
-			pstmt = conn.prepareStatement(sql);
-			//pstmt.setString(1, b.getRent_TF());
-			
+			pstmt = conn.prepareStatement(sql2);
+			pstmt.setString(1, BookService.loginMember.getMem_id());
 			result = pstmt.executeUpdate();
+			
+			if(result > 0) {
+				result = 0;
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, code);
+				result = pstmt.executeUpdate();
+				return result;
+			}
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -254,6 +272,7 @@ public class BookDao {
 			if(rset.next()) {
 				member = new Member();
 				member.setMem_id(rset.getString("mem_id"));
+			
 			}
 			
 		} catch (SQLException e) {

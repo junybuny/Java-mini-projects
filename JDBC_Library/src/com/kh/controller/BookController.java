@@ -5,17 +5,16 @@ import java.util.ArrayList;
 import com.kh.model.service.BookService;
 import com.kh.model.vo.Book;
 import com.kh.model.vo.Member;
+import com.kh.model.vo.RentBook;
 import com.kh.view.BookMenu;
 
 
 
 public class BookController {
 
-	public void insertBook(String code, String title, String author, String publisher) {
+	public void insertBook(Book m1) {
 		
-		Book b = new Book(code, title, author, publisher);
-		
-		int result = new BookService().insertBook(b);
+		int result = new BookService().insertBook(m1);
 		
 		if (result > 0) {
 			new BookMenu().displaySuccess("\n도서가 추가되었습니다.");
@@ -67,14 +66,12 @@ public class BookController {
 		if (bookList.isEmpty()) {
 			new BookMenu().displayNoData("대여할수 있는 도서가 없습니다.");
 		} else {
-			
-			
 			new BookMenu().displayBookList(bookList);
 		}
 	}
 	
 	public void rentY_bookList() {
-		ArrayList<Book> rentY_bookList = new BookService().rentY_bookList();
+		ArrayList<RentBook> rentY_bookList = new BookService().rentY_bookList();
 		
 		if (rentY_bookList.isEmpty()) {
 			new BookMenu().displayNoData("대여중인 도서가 없습니다.");
@@ -85,9 +82,7 @@ public class BookController {
 
 	public void rent_bookList(String code) {
 		
-		Book b = new Book();
-		
-		int result = new BookService().rent_bookList(b);
+		int result = new BookService().rent_bookList(code);
 		
 		if (result > 0) {
 			new BookMenu().displaySuccess("도서 대여를 완료하였습니다.");
@@ -98,11 +93,9 @@ public class BookController {
 		
 	}
 
-	public void return_bookList(String code) {
+	public void return_bookList(String code) {	
 		
-		Book b = new Book();	
-		
-		int result = new BookService().return_bookList(b);
+		int result = new BookService().return_bookList(code);
 		
 		if (result > 0) {
 			new BookMenu().displaySuccess("도서 반납을 완료하였습니다.");
@@ -136,25 +129,12 @@ public class BookController {
 		int result = new BookService().updateMember(m);
 		
 		if (result > 0) {
-			new BookMenu().displaySuccess("성공적으로 정보 수정을 완료하였습니다.");
+			new BookMenu().displaySuccess("\n성공적으로 정보 수정을 완료하였습니다.");
 		} else {
 			new BookMenu().displayFail("회원 정보 수정에 실패하였습니다.");
 		}
 		
-	}
-
-	
-//	public void selectList() {
-//		ArrayList<Member> list = new MemberService().selectList();
-//		
-//		if (list.isEmpty()) {
-//			new MemberMenu().displayNoData("전체 조회 결과가 없습니다.");
-//		} else {
-//			new MemberMenu().displayMemberList(list);
-//		}
-//		
-//	}
-		
+	}	
 	
 	
 } // class BookController

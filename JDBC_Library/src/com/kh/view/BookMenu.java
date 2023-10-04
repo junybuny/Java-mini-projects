@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import com.kh.controller.BookController;
 import com.kh.model.vo.Book;
+import com.kh.model.vo.RentBook;
 
 public class BookMenu {
 	
@@ -61,14 +62,14 @@ public class BookMenu {
 				
 				switch(mainMenu) {
 				case 3: 
-					bc.rentY_bookList(); // 수정필요, 로그인 한 회원의 도서목록 가져오기..
+					bc.rentY_bookList();
 					break;
 				case 4:
 					bc.bookList();
 					bc.rent_bookList(rentBook());
 					break;
 				case 5:
-					bc.bookList();
+					bc.rentY_bookList();
 					bc.return_bookList(returnBook());
 					break;
 				case 6:
@@ -154,9 +155,9 @@ public class BookMenu {
 		String author = sc.nextLine();
 
 		System.out.print("출판사 : ");
-		String publisher = sc.nextLine().toUpperCase();	
+		String publisher = sc.nextLine();	
 		
-		bc.insertBook(code, title, author, publisher);
+		bc.insertBook(new Book(code,title,author,publisher));
 	
 	}
 	
@@ -173,8 +174,8 @@ public class BookMenu {
 		System.out.print("회원 이름 : ");
 		String mem_name = sc.nextLine();
 		
-		System.out.print("회원 나이 : ");
-		String mem_age = sc.nextLine();
+		System.out.print("회원 이메일 : ");
+		String mem_email = sc.nextLine();
 
 		System.out.print("회원 전화번호 : ");
 		String mem_phone = sc.nextLine().toUpperCase();	
@@ -182,7 +183,7 @@ public class BookMenu {
 		System.out.print("회원 주소 : ");
 		String mem_address = sc.nextLine();
 		
-		bc.insertMember(mem_id, mem_pwd, mem_name, mem_age, mem_phone, mem_address);
+		bc.insertMember(mem_id, mem_pwd, mem_name, mem_email, mem_phone, mem_address);
 	}
 	
 	
@@ -208,11 +209,11 @@ public class BookMenu {
 		}
 	}
 	
-	public void displayRentBookList(ArrayList<Book> list) {
-		System.out.println("========== 도서 목록 ==========");
-		System.out.println("대여 도서코드 \t대여 도서명 \t대여한 회원아이디 \t대여일자");
+	public void displayRentBookList(ArrayList<RentBook> list) {
+		System.out.println("======== 대여 도서 목록 ========");
+		System.out.println("도서코드 \t대여 도서명 \t회원아이디 \t대여일자");
 		
-		for (Book b : list) {
+		for (RentBook b : list) {
 			System.out.println(b);
 		}
 	}

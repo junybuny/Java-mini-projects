@@ -4,7 +4,7 @@
 	
 	<entry key="insertBook">
 		INSERT INTO BOOK
-		VALUES(?, ?, ?, ?)
+		VALUES(?, ?, ?, ?, ?)
 	</entry>
 	<entry key="insertMember">
 		INSERT INTO MEMBER
@@ -21,26 +21,32 @@
 	<entry key="bookList">
 		SELECT *
 		FROM BOOK
-		ORDER BY BOOK_CODE
+		WHERE BOOK_ISRENT = 0
 	</entry>
 	<entry key="rentY_bookList">
-		SELECT RENT_ID, RENT_TITLE, RENT_MEMBER, RENT_DATE
+		SELECT RENT_ID, BOOK_TITLE, RENT_MEMBER, RENT_DATE
 		FROM RENTBOOK
-		JOIN BOOK ON (BOOK_CODE = RENT_ID)
-		JOIN BOOK ON (BOOK_TITLE = RENT_TITLE)
-		JOIN MEMBER ON (MEM_ID = RENT_MEMBER)
-		WHERE RENT_TF = 'Y' AND MEM_ID = ?;
+		JOIN BOOK USING (BOOK_CODE)
+		WHERE RENT_MEMBER = ?
 	</entry>
 	<entry key="rent_bookList">
-		UPDATE BOOK 
+		UPDATE BOOK
 		SET BOOK_ISRENT = 1
 		WHERE BOOK_CODE = ?
 	</entry>
-	
+	<entry key="rent_bookList2">
+		INSERT
+		INTO RENTBOOK
+		VALUES (SEQ_RENT_ID.NEXTVAL, ?, ?, SYSDATE)
+	</entry>
 	<entry key="return_bookList">
-		UPDATE BOOK 
-		SET RENT_TF = 'Y'
+		UPDATE BOOK
+		SET BOOK_ISRENT = 0
 		WHERE BOOK_CODE = ?
+	</entry>
+	<entry key="return_bookList2">
+		DELETE FROM RENTBOOK
+		WHERE RENT_ID = ?
 	</entry>
 	<entry key="loginMember">
 		SELECT *

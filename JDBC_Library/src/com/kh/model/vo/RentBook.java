@@ -8,6 +8,8 @@ public class RentBook {
 	private String rent_member;
 	private Date rent_date;
 	
+	
+	
 	public RentBook(String rent_id, String rent_title, String rent_member, Date rent_date) {
 		super();
 		this.rent_id = rent_id;
