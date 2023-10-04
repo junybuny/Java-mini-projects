@@ -87,15 +87,12 @@ public class BookController {
 		
 		Book b = new Book();
 		
-		boolean isRent = false;
-		
-		
-		
 		int result = new BookService().rent_bookList(b);
 		
 		if (result > 0) {
 			new BookMenu().displaySuccess("도서 대여를 완료하였습니다.");
 		} else {
+			
 			new BookMenu().displayFail("도서 대여에 실패하였습니다.");
 		}
 		
@@ -117,10 +114,10 @@ public class BookController {
 
 	public void loginMember(String mem_id, String mem_pwd) {
 		
-		int result = new BookService().loginMember(mem_id, mem_pwd);
+		Member member = new BookService().loginMember(mem_id, mem_pwd);
 		
-		if (result > 0) {
-			new BookMenu().displaySuccess(mem_id + "님 환영합니다.");
+		if (member != null) {
+			new BookMenu().mainMenu();
 		} else {
 			new BookMenu().displayFail("로그인에 실패하였습니다.");
 		}

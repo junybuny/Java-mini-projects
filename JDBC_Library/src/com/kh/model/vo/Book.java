@@ -5,9 +5,7 @@ public class Book {
 	private String title;
 	private String author;
 	private String publisher;
-	private boolean isRent = false;
-	private String mem_id;
-
+	
 	
 	public Book(String code, String title, String author, String publisher) {
 		// super();
@@ -54,14 +52,7 @@ public class Book {
 		this.publisher = publisher;
 	}
 	
-	public boolean getIsRent() {
-		return isRent;
-	}
-
-	public void setIsRent(boolean isRent) {
-		this.isRent = isRent;
-	}
-
+	
 
 	@Override
 	public String toString() {

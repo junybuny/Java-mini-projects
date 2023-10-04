@@ -9,7 +9,9 @@ import com.kh.model.vo.Book;
 import com.kh.model.vo.Member;
 
 public class BookService {
-
+	
+	static Member loginMember;
+	
 	public int insertBook(Book b) {
 		
 		Connection conn = JDBCTemplate.getConnection();
@@ -122,12 +124,12 @@ public class BookService {
 		return result;
 	}
 
-	public int loginMember(String mem_id, String mem_pwd) {
+	public Member loginMember(String mem_id, String mem_pwd) {
 		
 		Connection conn = JDBCTemplate.getConnection();
-		int result = new BookDao().loginMember(conn, mem_id, mem_pwd);
+		loginMember = new BookDao().loginMember(conn, mem_id, mem_pwd);
 		
-		if (result > 0) {
+		if (loginMember != null) {
 			JDBCTemplate.commit(conn);
 		} else {
 			JDBCTemplate.rollback(conn);
@@ -135,7 +137,7 @@ public class BookService {
 		
 		JDBCTemplate.close(conn);
 		
-		return result;
+		return loginMember;
 	}
 
 	public int updateMember(Member m) {

@@ -10,14 +10,41 @@ public class BookMenu {
 	private Scanner sc = new Scanner(System.in);
 	private BookController bc = new BookController();
 	
+	public void loginMenu() {
+		
+		while(true) {
+			System.out.println("============================");
+			System.out.println("1. 로그인");
+			System.out.println("2. 회원 등록");
+			System.out.println("0. 종료");
+			System.out.println("============================");
+			System.out.print(">> 메뉴 선택 : ");
+			
+			int loginMenu = sc.nextInt();
+			sc.nextLine();
+			
+			switch(loginMenu) {
+			case 1: 
+				bc.loginMember(inputmem_id(), inputmem_pwd());
+				break;
+			case 2:
+				inputMember();
+				break;
+			case 0:
+				System.out.println("이용해주셔서 감사합니다. 프로그램을 종료합니다.");
+				return;
+			default:
+				System.out.println("메뉴를 잘못 입력하셨습니다. 다시 입력해주세요.");
+				break;
+			}
+		}
+	}
+	
 	public void mainMenu() {
 		
-				// 회원수정
-				// 도서대여(boolean) 수정
+				System.out.println("로그인 성공");
 				while(true) {
 				System.out.println("============================");
-				System.out.println("1. 로그인");
-				System.out.println("2. 회원 등록");
 				System.out.println("3. 대여 현황");
 				System.out.println("4. 도서 대여");
 				System.out.println("5. 도서 반납");
@@ -29,22 +56,16 @@ public class BookMenu {
 				System.out.println("============================");
 				System.out.print(">> 메뉴 선택 : ");
 				
-				int menu = sc.nextInt();
+				int mainMenu = sc.nextInt();
 				sc.nextLine();
 				
-				switch(menu) {
-				case 1: 
-					bc.loginMember(inputmem_id(), inputmem_pwd());
-					break;
-				case 2:
-					inputMember();
-					break;
+				switch(mainMenu) {
 				case 3: 
 					bc.rentY_bookList(); // 수정필요, 로그인 한 회원의 도서목록 가져오기..
 					break;
 				case 4:
 					bc.bookList();
-					bc.rent_bookList(rentBook()); // 로그인 하여야 가능한지..?
+					bc.rent_bookList(rentBook());
 					break;
 				case 5:
 					bc.bookList();
@@ -180,7 +201,7 @@ public class BookMenu {
 
 	public void displayBookList(ArrayList<Book> list) {
 		System.out.println("========== 도서 목록 ==========");
-		System.out.println("도서 코드 \t도서명 \t\t저자 \t\t출판사 \t대여가능여부");
+		System.out.println("도서 코드 \t도서명 \t\t저자 \t\t출판사 \t\t대여가능여부");
 		
 		for (Book b : list) {
 			System.out.println(b);

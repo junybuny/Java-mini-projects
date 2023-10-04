@@ -200,7 +200,7 @@ public class BookDao {
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
-			//pstmt.setString(1, b.getRent_TF());
+			pstmt.setString(1, b.getCode());
 			
 			result = pstmt.executeUpdate();
 			
@@ -235,10 +235,11 @@ public class BookDao {
 		return result;
 	}
 
-	public int loginMember(Connection conn, String mem_id, String mem_pwd) {
+	public Member loginMember(Connection conn, String mem_id, String mem_pwd) {
 		
-		int result = 0;
+		Member member = null;
 		
+		ResultSet rset = null;
 		PreparedStatement pstmt = null;
 		
 		String sql = prop.getProperty("loginMember");
@@ -248,15 +249,21 @@ public class BookDao {
 			pstmt.setString(1, mem_id);
 			pstmt.setString(2, mem_pwd);
 			
-			result = pstmt.executeUpdate();
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				member = new Member();
+				member.setMem_id(rset.getString("mem_id"));
+			}
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			JDBCTemplate.close(pstmt);
+			JDBCTemplate.close(rset);
 		}
 		
-		return result;
+		return member;
 	}
 
 	public int updateMember(Connection conn, Member m) {

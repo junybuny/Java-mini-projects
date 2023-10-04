@@ -33,7 +33,7 @@
 	</entry>
 	<entry key="rent_bookList">
 		UPDATE BOOK 
-		SET RENT_TF = 'N'
+		SET BOOK_ISRENT = 1
 		WHERE BOOK_CODE = ?
 	</entry>
 	
@@ -43,7 +43,7 @@
 		WHERE BOOK_CODE = ?
 	</entry>
 	<entry key="loginMember">
-		SELECT MEM_ID
+		SELECT *
 		FROM MEMBER
 		WHERE MEM_ID = ? AND MEM_PWD = ?
 	</entry>
