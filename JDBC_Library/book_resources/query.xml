@@ -4,7 +4,7 @@
 	
 	<entry key="insertBook">
 		INSERT INTO BOOK
-		VALUES(?, ?, ?, ?, ?)
+		VALUES(?, ?, ?, ?, DEFAULT)
 	</entry>
 	<entry key="insertMember">
 		INSERT INTO MEMBER
@@ -12,7 +12,7 @@
 	</entry>
 	<entry key="deleteBook">
 		DELETE FROM BOOK
-		WHERE BOOK_CODE = ?
+		WHERE BOOK_ISRENT = 0 AND BOOK_CODE = ?
 	</entry>
 	<entry key="deleteMember">
 		DELETE FROM MEMBER
@@ -24,7 +24,7 @@
 		WHERE BOOK_ISRENT = 0
 	</entry>
 	<entry key="rentY_bookList">
-		SELECT RENT_ID, BOOK_TITLE, RENT_MEMBER, RENT_DATE
+		SELECT BOOK_CODE, BOOK_TITLE, RENT_MEMBER, RENT_DATE
 		FROM RENTBOOK
 		JOIN BOOK USING (BOOK_CODE)
 		WHERE RENT_MEMBER = ?
@@ -46,7 +46,7 @@
 	</entry>
 	<entry key="return_bookList2">
 		DELETE FROM RENTBOOK
-		WHERE RENT_ID = ?
+		WHERE BOOK_CODE = ?
 	</entry>
 	<entry key="loginMember">
 		SELECT *

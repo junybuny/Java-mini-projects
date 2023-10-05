@@ -3,28 +3,34 @@ package com.kh.model.vo;
 import java.sql.Date;
 
 public class RentBook {
-	private String rent_id;
+	private String book_code;
 	private String rent_title;
 	private String rent_member;
 	private Date rent_date;
 	
 	
 	
-	public RentBook(String rent_id, String rent_title, String rent_member, Date rent_date) {
+	public RentBook(String book_code, String rent_title, String rent_member, Date rent_date) {
 		super();
-		this.rent_id = rent_id;
+		this.book_code = book_code;
 		this.rent_title = rent_title;
 		this.rent_member = rent_member;
 		this.rent_date = rent_date;
 	}
 
-	public String getRent_id() {
-		return rent_id;
+	
+
+	public String getBook_code() {
+		return book_code;
 	}
 
-	public void setRent_id(String rent_id) {
-		this.rent_id = rent_id;
+
+
+	public void setBook_code(String book_code) {
+		this.book_code = book_code;
 	}
+
+
 
 	public String getRent_title() {
 		return rent_title;
@@ -52,7 +58,7 @@ public class RentBook {
 	
 	@Override
 	public String toString() {
-		return rent_id + "\t" + rent_title + "\t" + rent_member + "\t" + rent_date;
+		return book_code + "\t" + rent_title + "\t" + rent_member + "\t" + rent_date;
 	}
 	
 	

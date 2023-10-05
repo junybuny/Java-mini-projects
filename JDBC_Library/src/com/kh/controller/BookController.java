@@ -43,9 +43,9 @@ public class BookController {
 		int result = new BookService().deleteBook(code);
 		
 		if (result > 0) {
-			new BookMenu().displaySuccess(code + "도서 삭제에 완료하였습니다.");
+			new BookMenu().displaySuccess(code + " 도서 삭제에 완료하였습니다.");
 		} else {
-			new BookMenu().displayFail(code + "도서 삭제에 실패하였습니다.");
+			new BookMenu().displayFail("대여중인 도서 입니다. 반납 후 삭제 해주세요.");
 		}
 	}
 
@@ -53,8 +53,11 @@ public class BookController {
 		
 		int result = new BookService().deleteMember(mem_id);
 		
-		if (result > 0) {
+		if (result == 999) {
+			new BookMenu().displayFail(mem_id + "회원은 대여중인 도서가 있어 삭제 불가합니다.");
+		} else if (result > 0) {
 			new BookMenu().displaySuccess(mem_id + "회원을 삭제 완료하였습니다.");
+			new BookMenu().loginMenu();
 		} else {
 			new BookMenu().displayFail(mem_id + "회원 삭제에 실패하였습니다.");
 		}

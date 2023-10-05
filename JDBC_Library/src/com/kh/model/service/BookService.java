@@ -64,7 +64,14 @@ public class BookService {
 	public int deleteMember(String mem_id) {
 		
 		Connection conn = JDBCTemplate.getConnection();
-		int result = new BookDao().deleteMember(conn, mem_id);
+		int result;
+		ArrayList<RentBook> rentY_bookList = new BookDao().rentY_bookList(conn);
+		
+		if (rentY_bookList.size() > 0) {
+			result = 999;
+		} else {
+			result = new BookDao().deleteMember(conn, mem_id);	
+		}
 		
 		if (result > 0) {
 			JDBCTemplate.commit(conn);

@@ -39,8 +39,7 @@ public class BookDao {
 			pstmt.setString(1, b.getCode());
 			pstmt.setString(2, b.getTitle());
 			pstmt.setString(3, b.getAuthor());
-			pstmt.setString(4, b.getPublisher());
-			pstmt.setString(5, BookService.loginMember.getMem_id());			
+			pstmt.setString(4, b.getPublisher());		
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -172,7 +171,7 @@ public class BookDao {
 			
 			
 			while(rset.next()) {
-				RentBook rb = new RentBook(rset.getString("rent_id"),
+				RentBook rb = new RentBook(rset.getString("BOOK_CODE"),
 						rset.getString("book_title"),
 						rset.getString("rent_member"),
 						rset.getDate("rent_date")
@@ -233,7 +232,7 @@ public class BookDao {
 		
 		try {
 			pstmt = conn.prepareStatement(sql2);
-			pstmt.setString(1, BookService.loginMember.getMem_id());
+			pstmt.setString(1, code);
 			result = pstmt.executeUpdate();
 			
 			if(result > 0) {

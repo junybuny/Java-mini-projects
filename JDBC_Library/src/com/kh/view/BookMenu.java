@@ -82,8 +82,7 @@ public class BookMenu {
 					updateMember();
 					break;
 				case 9:
-					// 회원탈퇴 구현
-					bc.deleteMember(inputmem_id()); // <- 이건회원삭제, 대여중인 책 있으면 탈퇴 불가
+					bc.deleteMember(inputmem_id());
 					break;
 				case 0:
 					System.out.println("이용해주셔서 감사합니다. 프로그램을 종료합니다.");
@@ -202,7 +201,7 @@ public class BookMenu {
 
 	public void displayBookList(ArrayList<Book> list) {
 		System.out.println("========== 도서 목록 ==========");
-		System.out.println("도서 코드 \t도서명 \t\t저자 \t\t출판사 \t\t대여가능여부");
+		System.out.println("도서 코드 \t도서명 \t\t저자 \t\t출판사");
 		
 		for (Book b : list) {
 			System.out.println(b);
